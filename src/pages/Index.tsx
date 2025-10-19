@@ -206,32 +206,33 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm sticky top-0 z-50 animate-fade-in">
+      <header className="bg-gradient-to-b from-background via-card to-background/95 backdrop-blur-sm border-b border-border/30 sticky top-0 z-50 shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg border border-primary/30">
                 <Icon name="BookOpen" className="text-primary-foreground" size={28} />
               </div>
-              <h1 className="text-2xl font-heading font-bold text-primary">
+              <h1 className="text-3xl font-heading font-bold text-foreground tracking-wide">
                 Моя Библиотека
               </h1>
+              <p className="text-sm text-muted-foreground mt-1 font-light">Коллекция историй и тайн</p>
             </div>
             <div className="flex gap-3">
               <Link to="/statistics">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2 border-border/50 hover:bg-muted/50 hover:border-primary/50 transition-all">
                   <Icon name="BarChart3" size={20} />
                   Статистика
                 </Button>
               </Link>
               <Link to="/authors">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2 border-border/50 hover:bg-muted/50 hover:border-primary/50 transition-all">
                   <Icon name="Users" size={20} />
                   Авторы
                 </Button>
               </Link>
               <Button 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground transition-all border border-primary/30"
+                className="bg-primary hover:bg-primary/80 text-primary-foreground transition-all shadow-md hover:shadow-lg"
                 onClick={() => setDialogOpen(true)}
               >
                 <Icon name="Plus" size={20} className="mr-2" />
@@ -244,46 +245,46 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-slide-up">
-          <Card className="bg-gradient-to-br from-blue-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
+          <Card className="bg-card/60 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Прочитано</CardTitle>
+              <CardTitle className="text-xs font-heading uppercase tracking-widest text-muted-foreground">Прочитано</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalRead}</div>
-              <p className="text-xs text-gray-500 mt-2">книг завершено</p>
+              <div className="text-4xl font-heading font-bold text-primary group-hover:scale-105 transition-transform">{stats.totalRead}</div>
+              <p className="text-xs text-muted-foreground mt-2 italic">книг завершено</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
+          <Card className="bg-card/60 backdrop-blur-sm border border-secondary/20 hover:border-secondary/40 hover:shadow-xl transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">В планах</CardTitle>
+              <CardTitle className="text-xs font-heading uppercase tracking-widest text-muted-foreground">В планах</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalWishlist}</div>
-              <p className="text-xs text-gray-500 mt-2">хочу прочитать</p>
+              <div className="text-4xl font-heading font-bold text-secondary group-hover:scale-105 transition-transform">{stats.totalWishlist}</div>
+              <p className="text-xs text-muted-foreground mt-2 italic">хочу прочитать</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-amber-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
+          <Card className="bg-card/60 backdrop-blur-sm border border-accent/20 hover:border-accent/40 hover:shadow-xl transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Страниц</CardTitle>
+              <CardTitle className="text-xs font-heading uppercase tracking-widest text-muted-foreground">Страниц</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalPages.toLocaleString()}</div>
-              <p className="text-xs text-gray-500 mt-2">всего прочитано</p>
+              <div className="text-4xl font-heading font-bold text-accent group-hover:scale-105 transition-transform">{stats.totalPages.toLocaleString()}</div>
+              <p className="text-xs text-muted-foreground mt-2 italic">всего прочитано</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-emerald-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
+          <Card className="bg-card/60 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Рейтинг</CardTitle>
+              <CardTitle className="text-xs font-heading uppercase tracking-widest text-muted-foreground">Рейтинг</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.avgRating}</div>
-                <Icon name="Star" size={24} className="fill-yellow-400 text-yellow-400" />
+                <div className="text-4xl font-heading font-bold text-primary group-hover:scale-105 transition-transform">{stats.avgRating}</div>
+                <Icon name="Star" size={20} className="fill-primary text-primary opacity-80" />
               </div>
-              <p className="text-xs text-gray-500 mt-2">средняя оценка</p>
+              <p className="text-xs text-muted-foreground mt-2 italic">средняя оценка</p>
             </CardContent>
           </Card>
         </div>
@@ -293,7 +294,7 @@ const Index = () => {
             <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
             <Input
               placeholder="Поиск по названию или автору..."
-              className="pl-10 h-12 bg-white border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 transition-all rounded-xl"
+              className="pl-10 h-12 bg-card/50 backdrop-blur-sm border-border focus:border-primary transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -303,7 +304,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'all' ? 'default' : 'outline'}
               onClick={() => setActiveTab('all')}
-              className={activeTab === 'all' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
+              className={activeTab === 'all' ? 'bg-primary text-primary-foreground shadow-md' : 'border-border/50 hover:bg-muted/50'}
             >
               <Icon name="BookOpen" size={18} className="mr-2" />
               Все книги
@@ -311,7 +312,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'read' ? 'default' : 'outline'}
               onClick={() => setActiveTab('read')}
-              className={activeTab === 'read' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
+              className={activeTab === 'read' ? 'bg-primary text-primary-foreground shadow-md' : 'border-border/50 hover:bg-muted/50'}
             >
               <Icon name="CheckCircle2" size={18} className="mr-2" />
               Прочитанное
@@ -319,7 +320,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'wishlist' ? 'default' : 'outline'}
               onClick={() => setActiveTab('wishlist')}
-              className={activeTab === 'wishlist' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
+              className={activeTab === 'wishlist' ? 'bg-primary text-primary-foreground shadow-md' : 'border-border/50 hover:bg-muted/50'}
             >
               <Icon name="Heart" size={18} className="mr-2" />
               Хочу прочитать
@@ -328,7 +329,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select value={ratingFilter} onValueChange={setRatingFilter}>
-              <SelectTrigger className="bg-white border-gray-200 rounded-xl">
+              <SelectTrigger className="bg-card/50 backdrop-blur-sm border-border">
                 <SelectValue placeholder="Фильтр по рейтингу" />
               </SelectTrigger>
               <SelectContent>
@@ -341,7 +342,7 @@ const Index = () => {
             </Select>
 
             <Select value={authorFilter} onValueChange={setAuthorFilter}>
-              <SelectTrigger className="bg-white border-gray-200 rounded-xl">
+              <SelectTrigger className="bg-card/50 backdrop-blur-sm border-border">
                 <SelectValue placeholder="Фильтр по автору" />
               </SelectTrigger>
               <SelectContent>
@@ -358,7 +359,7 @@ const Index = () => {
           {filteredBooks.map((book, index) => (
             <Card
               key={book.id}
-              className="group overflow-hidden hover:shadow-soft transition-all duration-500 hover:-translate-y-1 animate-scale-in border-0 bg-white rounded-2xl"
+              className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 animate-scale-in border border-border/30 hover:border-primary/50 bg-card/80 backdrop-blur-sm"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="relative overflow-hidden">
@@ -406,9 +407,9 @@ const Index = () => {
                   </DropdownMenu>
                 </div>
               </div>
-              <CardContent className="p-4 bg-card/50 backdrop-blur-sm">
-                <h3 className="font-heading font-bold text-lg mb-1 line-clamp-2 text-foreground">{book.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{book.author}</p>
+              <CardContent className="p-5 bg-gradient-to-b from-card/80 to-card/95 backdrop-blur-sm">
+                <h3 className="font-heading font-semibold text-lg mb-1 line-clamp-2 text-foreground tracking-wide">{book.title}</h3>
+                <p className="text-sm text-muted-foreground mb-3 italic">{book.author}</p>
                 
                 {book.rating && (
                   <div className="flex items-center gap-1 mb-2">
@@ -423,12 +424,12 @@ const Index = () => {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-xs text-muted-foreground mt-3 pt-3 border-t border-border">
-                  <span className="flex items-center gap-1">
+                <div className="flex items-center justify-between text-xs text-muted-foreground mt-3 pt-3 border-t border-border/50">
+                  <span className="flex items-center gap-1.5">
                     <Icon name="Calendar" size={14} />
                     {book.year}
                   </span>
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1.5">
                     <Icon name="FileText" size={14} />
                     {book.pages} стр.
                   </span>

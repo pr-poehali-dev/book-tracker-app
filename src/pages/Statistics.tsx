@@ -35,7 +35,7 @@ export default function Statistics() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">Загрузка статистики...</p>

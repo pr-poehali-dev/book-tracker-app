@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
-				heading: ['Playfair Display', 'Georgia', 'serif'],
+				sans: ['Crimson Pro', 'Georgia', 'serif'],
+				heading: ['Cinzel', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
