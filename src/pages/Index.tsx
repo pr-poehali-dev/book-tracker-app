@@ -244,46 +244,46 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-slide-up">
-          <Card className="bg-card/50 border-primary/20 hover:border-primary/40 transition-all backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-blue-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Прочитано</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Прочитано</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold text-primary">{stats.totalRead}</div>
-              <p className="text-xs text-muted-foreground mt-1">книг завершено</p>
+              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalRead}</div>
+              <p className="text-xs text-gray-500 mt-2">книг завершено</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 border-secondary/20 hover:border-secondary/40 transition-all backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-purple-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">В планах</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">В планах</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold text-secondary">{stats.totalWishlist}</div>
-              <p className="text-xs text-muted-foreground mt-1">хочу прочитать</p>
+              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalWishlist}</div>
+              <p className="text-xs text-gray-500 mt-2">хочу прочитать</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 border-accent/20 hover:border-accent/40 transition-all backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-amber-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Страниц</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Страниц</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold text-accent">{stats.totalPages.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground mt-1">всего прочитано</p>
+              <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.totalPages.toLocaleString()}</div>
+              <p className="text-xs text-gray-500 mt-2">всего прочитано</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card/50 border-primary/20 hover:border-primary/40 transition-all backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-emerald-50 to-white border-0 hover:shadow-glow transition-all duration-300 group">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Рейтинг</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600 uppercase tracking-wide">Рейтинг</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <div className="text-3xl font-heading font-bold text-primary">{stats.avgRating}</div>
-                <Icon name="Star" size={20} className="fill-primary text-primary" />
+                <div className="text-4xl font-heading font-bold text-gray-900 group-hover:scale-105 transition-transform">{stats.avgRating}</div>
+                <Icon name="Star" size={24} className="fill-yellow-400 text-yellow-400" />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">средняя оценка</p>
+              <p className="text-xs text-gray-500 mt-2">средняя оценка</p>
             </CardContent>
           </Card>
         </div>
@@ -293,7 +293,7 @@ const Index = () => {
             <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
             <Input
               placeholder="Поиск по названию или автору..."
-              className="pl-10 h-12 bg-card/50 border-border focus:border-primary transition-colors"
+              className="pl-10 h-12 bg-white border-gray-200 focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10 transition-all rounded-xl"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -303,7 +303,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'all' ? 'default' : 'outline'}
               onClick={() => setActiveTab('all')}
-              className={activeTab === 'all' ? 'bg-primary text-primary-foreground' : ''}
+              className={activeTab === 'all' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
             >
               <Icon name="BookOpen" size={18} className="mr-2" />
               Все книги
@@ -311,7 +311,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'read' ? 'default' : 'outline'}
               onClick={() => setActiveTab('read')}
-              className={activeTab === 'read' ? 'bg-primary text-primary-foreground' : ''}
+              className={activeTab === 'read' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
             >
               <Icon name="CheckCircle2" size={18} className="mr-2" />
               Прочитанное
@@ -319,7 +319,7 @@ const Index = () => {
             <Button
               variant={activeTab === 'wishlist' ? 'default' : 'outline'}
               onClick={() => setActiveTab('wishlist')}
-              className={activeTab === 'wishlist' ? 'bg-primary text-primary-foreground' : ''}
+              className={activeTab === 'wishlist' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-200 hover:bg-gray-50'}
             >
               <Icon name="Heart" size={18} className="mr-2" />
               Хочу прочитать
@@ -328,7 +328,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Select value={ratingFilter} onValueChange={setRatingFilter}>
-              <SelectTrigger className="bg-card/50 border-border">
+              <SelectTrigger className="bg-white border-gray-200 rounded-xl">
                 <SelectValue placeholder="Фильтр по рейтингу" />
               </SelectTrigger>
               <SelectContent>
@@ -341,7 +341,7 @@ const Index = () => {
             </Select>
 
             <Select value={authorFilter} onValueChange={setAuthorFilter}>
-              <SelectTrigger className="bg-card/50 border-border">
+              <SelectTrigger className="bg-white border-gray-200 rounded-xl">
                 <SelectValue placeholder="Фильтр по автору" />
               </SelectTrigger>
               <SelectContent>
@@ -358,7 +358,7 @@ const Index = () => {
           {filteredBooks.map((book, index) => (
             <Card
               key={book.id}
-              className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-scale-in border-2 hover:border-primary"
+              className="group overflow-hidden hover:shadow-soft transition-all duration-500 hover:-translate-y-1 animate-scale-in border-0 bg-white rounded-2xl"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="relative overflow-hidden">
