@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Progress } from '@/components/ui/progress';
+import AddBookDialog from '@/components/AddBookDialog';
 
 type BookStatus = 'read' | 'wishlist' | 'all';
 
@@ -81,10 +82,16 @@ const mockBooks: Book[] = [
 ];
 
 const Index = () => {
+  const [books, setBooks] = useState<Book[]>(mockBooks);
   const [activeTab, setActiveTab] = useState<BookStatus>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const filteredBooks = mockBooks.filter(book => {
+  const handleAddBook = (newBook: Book) => {
+    setBooks([...books, newBook]);
+  };
+
+  const filteredBooks = books.filter(book => {
     const matchesTab = activeTab === 'all' || book.status === activeTab;
     const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           book.author.toLowerCase().includes(searchQuery.toLowerCase());
@@ -92,10 +99,10 @@ const Index = () => {
   });
 
   const stats = {
-    totalRead: mockBooks.filter(b => b.status === 'read').length,
-    totalWishlist: mockBooks.filter(b => b.status === 'wishlist').length,
-    totalPages: mockBooks.filter(b => b.status === 'read').reduce((sum, b) => sum + (b.pages || 0), 0),
-    avgRating: (mockBooks.filter(b => b.rating).reduce((sum, b) => sum + (b.rating || 0), 0) / mockBooks.filter(b => b.rating).length).toFixed(1)
+    totalRead: books.filter(b => b.status === 'read').length,
+    totalWishlist: books.filter(b => b.status === 'wishlist').length,
+    totalPages: books.filter(b => b.status === 'read').reduce((sum, b) => sum + (b.pages || 0), 0),
+    avgRating: (books.filter(b => b.rating).reduce((sum, b) => sum + (b.rating || 0), 0) / books.filter(b => b.rating).length).toFixed(1)
   };
 
   return (
@@ -111,10 +118,27 @@ const Index = () => {
                 Моя Библиотека
               </h1>
             </div>
-            <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-              <Icon name="Plus" size={20} className="mr-2" />
-              Добавить книгу
-            </Button>
+            <div className="flex gap-3">
+              <Link to="/statistics">
+                <Button variant="outline" className="gap-2">
+                  <Icon name="BarChart3" size={20} />
+                  Статистика
+                </Button>
+              </Link>
+              <Link to="/authors">
+                <Button variant="outline" className="gap-2">
+                  <Icon name="Users" size={20} />
+                  Авторы
+                </Button>
+              </Link>
+              <Button 
+                className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity"
+                onClick={() => setDialogOpen(true)}
+              >
+                <Icon name="Plus" size={20} className="mr-2" />
+                Добавить книгу
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -273,6 +297,12 @@ const Index = () => {
           </div>
         )}
       </main>
+
+      <AddBookDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        onAddBook={handleAddBook}
+      />
     </div>
   );
 };
