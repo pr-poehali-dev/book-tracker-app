@@ -6,6 +6,23 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import AddBookDialog from '@/components/AddBookDialog';
+import EditBookDialog from '@/components/EditBookDialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { api, type Book as APIBook } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 
@@ -28,6 +45,9 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState<BookStatus>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { toast } = useToast();
 
   const loadBooks = async () => {
@@ -85,6 +105,58 @@ const Index = () => {
         description: 'Не удалось добавить книгу',
         variant: 'destructive',
       });
+    }
+  };
+
+  const handleEditBook = async (updatedBook: Book) => {
+    try {
+      const bookData = {
+        id: updatedBook.id,
+        title: updatedBook.title,
+        author: updatedBook.author,
+        status: updatedBook.status,
+        cover_url: updatedBook.cover,
+        year: updatedBook.year,
+        pages: updatedBook.pages,
+        rating: updatedBook.rating,
+      };
+      
+      await api.books.update(bookData);
+      await loadBooks();
+      
+      toast({
+        title: 'Готово!',
+        description: 'Книга обновлена',
+      });
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось обновить книгу',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleDeleteBook = async () => {
+    if (!selectedBook) return;
+    
+    try {
+      await api.books.delete(selectedBook.id);
+      await loadBooks();
+      
+      toast({
+        title: 'Готово!',
+        description: 'Книга удалена',
+      });
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось удалить книгу',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeleteDialogOpen(false);
+      setSelectedBook(null);
     }
   };
 
@@ -266,6 +338,28 @@ const Index = () => {
                     )}
                   </Badge>
                 </div>
+                <div className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="sm" variant="secondary" className="h-8 w-8 p-0">
+                        <Icon name="MoreVertical" size={16} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem onClick={() => { setSelectedBook(book); setEditDialogOpen(true); }}>
+                        <Icon name="Pencil" size={16} className="mr-2" />
+                        Редактировать
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => { setSelectedBook(book); setDeleteDialogOpen(true); }}
+                        className="text-destructive"
+                      >
+                        <Icon name="Trash2" size={16} className="mr-2" />
+                        Удалить
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
               <CardContent className="p-4">
                 <h3 className="font-heading font-bold text-lg mb-1 line-clamp-2">{book.title}</h3>
@@ -313,6 +407,33 @@ const Index = () => {
         onOpenChange={setDialogOpen} 
         onAddBook={handleAddBook}
       />
+
+      <EditBookDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onEditBook={handleEditBook}
+        book={selectedBook}
+      />
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Удалить книгу?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Вы уверены, что хотите удалить "{selectedBook?.title}"? Это действие нельзя отменить.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Отмена</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteBook}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Удалить
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

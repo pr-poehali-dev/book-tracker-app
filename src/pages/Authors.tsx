@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -68,16 +69,23 @@ export default function Authors() {
     <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50">
       <header className="border-b bg-white/80 backdrop-blur-sm animate-fade-in">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-xl">
-              <Icon name="Users" className="text-white" size={28} />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-xl">
+                <Icon name="Users" className="text-white" size={28} />
+              </div>
+              <div>
+                <h1 className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  Авторы
+                </h1>
+                <p className="text-sm text-muted-foreground">Ваш личный каталог писателей</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Авторы
-              </h1>
-              <p className="text-sm text-muted-foreground">Ваш личный каталог писателей</p>
-            </div>
+            <Link to="/">
+              <button className="p-2 hover:bg-muted rounded-lg transition-colors">
+                <Icon name="Home" size={24} className="text-primary" />
+              </button>
+            </Link>
           </div>
         </div>
       </header>
