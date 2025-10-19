@@ -335,7 +335,7 @@ const Index = () => {
                 <SelectItem value="all">Все рейтинги</SelectItem>
                 <SelectItem value="high">Высокий (4+)</SelectItem>
                 <SelectItem value="medium">Средний (2.5-4)</SelectItem>
-                <SelectItem value="low">Низкий (<2.5)</SelectItem>
+                <SelectItem value="low">Низкий (&lt;2.5)</SelectItem>
                 <SelectItem value="unrated">Без оценки</SelectItem>
               </SelectContent>
             </Select>
