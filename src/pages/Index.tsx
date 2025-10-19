@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import AddBookDialog from '@/components/AddBookDialog';
+import { api, type Book as APIBook } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
 
 type BookStatus = 'read' | 'wishlist' | 'all';
 
@@ -20,75 +22,70 @@ interface Book {
   pages?: number;
 }
 
-const mockBooks: Book[] = [
-  {
-    id: 1,
-    title: 'Мастер и Маргарита',
-    author: 'Михаил Булгаков',
-    status: 'read',
-    cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop',
-    year: 1967,
-    rating: 5,
-    pages: 480
-  },
-  {
-    id: 2,
-    title: 'Преступление и наказание',
-    author: 'Фёдор Достоевский',
-    status: 'read',
-    cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop',
-    year: 1866,
-    rating: 5,
-    pages: 671
-  },
-  {
-    id: 3,
-    title: 'Война и мир',
-    author: 'Лев Толстой',
-    status: 'wishlist',
-    cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop',
-    year: 1869,
-    pages: 1225
-  },
-  {
-    id: 4,
-    title: '1984',
-    author: 'Джордж Оруэлл',
-    status: 'read',
-    cover: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=600&fit=crop',
-    year: 1949,
-    rating: 5,
-    pages: 328
-  },
-  {
-    id: 5,
-    title: 'Гарри Поттер',
-    author: 'Джоан Роулинг',
-    status: 'wishlist',
-    cover: 'https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=400&h=600&fit=crop',
-    year: 1997,
-    pages: 432
-  },
-  {
-    id: 6,
-    title: 'Атлант расправил плечи',
-    author: 'Айн Рэнд',
-    status: 'read',
-    cover: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=600&fit=crop',
-    year: 1957,
-    rating: 4,
-    pages: 1168
-  }
-];
-
 const Index = () => {
-  const [books, setBooks] = useState<Book[]>(mockBooks);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<BookStatus>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { toast } = useToast();
 
-  const handleAddBook = (newBook: Book) => {
-    setBooks([...books, newBook]);
+  const loadBooks = async () => {
+    try {
+      setLoading(true);
+      const data = await api.books.getAll();
+      const mappedBooks: Book[] = data.map(book => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        status: book.status,
+        cover: book.cover_url || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop',
+        year: book.year,
+        rating: book.rating,
+        pages: book.pages,
+      }));
+      setBooks(mappedBooks);
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось загрузить книги',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadBooks();
+  }, []);
+
+  const handleAddBook = async (newBook: Book) => {
+    try {
+      const bookData = {
+        title: newBook.title,
+        author: newBook.author,
+        status: newBook.status,
+        cover_url: newBook.cover,
+        year: newBook.year,
+        pages: newBook.pages,
+        rating: newBook.rating,
+      };
+      
+      await api.books.create(bookData);
+      await loadBooks();
+      
+      toast({
+        title: 'Готово!',
+        description: 'Книга добавлена в библиотеку',
+      });
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось добавить книгу',
+        variant: 'destructive',
+      });
+    }
   };
 
   const filteredBooks = books.filter(book => {
@@ -102,8 +99,21 @@ const Index = () => {
     totalRead: books.filter(b => b.status === 'read').length,
     totalWishlist: books.filter(b => b.status === 'wishlist').length,
     totalPages: books.filter(b => b.status === 'read').reduce((sum, b) => sum + (b.pages || 0), 0),
-    avgRating: (books.filter(b => b.rating).reduce((sum, b) => sum + (b.rating || 0), 0) / books.filter(b => b.rating).length).toFixed(1)
+    avgRating: books.filter(b => b.rating).length > 0 
+      ? (books.filter(b => b.rating).reduce((sum, b) => sum + (b.rating || 0), 0) / books.filter(b => b.rating).length).toFixed(1)
+      : '0.0'
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Загрузка библиотеки...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50">

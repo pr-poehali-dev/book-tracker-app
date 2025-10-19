@@ -1,0 +1,15 @@
+{
+  "tests": [
+    {
+      "name": "Get reading statistics",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "overall": {},
+        "monthly": []
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

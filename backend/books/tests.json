@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "Get all books",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "type"
+    },
+    {
+      "name": "Add new book",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "title": "Test Book",
+        "author": "Test Author",
+        "status": "wishlist",
+        "cover_url": "https://example.com/cover.jpg",
+        "year": 2024,
+        "pages": 300,
+        "rating": 5
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "title": "string",
+        "author": "string",
+        "status": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
