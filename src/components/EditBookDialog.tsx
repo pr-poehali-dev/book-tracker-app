@@ -92,12 +92,12 @@ export default function EditBookDialog({ open, onOpenChange, onEditBook, book }:
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card/95 backdrop-blur-sm border-border">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-heading bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <DialogTitle className="text-2xl font-heading text-primary">
             Редактировать книгу
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground">
             Измените информацию о книге
           </DialogDescription>
         </DialogHeader>

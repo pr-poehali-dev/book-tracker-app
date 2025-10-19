@@ -2,6 +2,7 @@ const API_URLS = {
   books: 'https://functions.poehali.dev/134ce821-a9eb-4c13-9da8-db7469389aaf',
   stats: 'https://functions.poehali.dev/fc06f0af-ed1b-438b-905c-89a3ed331db2',
   authors: 'https://functions.poehali.dev/31d1c33f-7405-4012-b90f-bd1c6d241848',
+  bookSearch: 'https://functions.poehali.dev/37e14c5b-c3c4-408d-9462-cf554649f888',
 };
 
 export interface Book {
@@ -37,6 +38,15 @@ export interface Statistics {
     books_count: number;
     pages_count: number;
   }>;
+}
+
+export interface SearchedBook {
+  title: string;
+  author: string;
+  year?: number;
+  cover?: string;
+  pages?: number;
+  isbn?: string;
 }
 
 export const api = {
@@ -89,6 +99,15 @@ export const api = {
       const response = await fetch(API_URLS.authors);
       if (!response.ok) throw new Error('Failed to fetch authors');
       return response.json();
+    },
+  },
+
+  bookSearch: {
+    search: async (query: string): Promise<SearchedBook[]> => {
+      const response = await fetch(`${API_URLS.bookSearch}?q=${encodeURIComponent(query)}`);
+      if (!response.ok) throw new Error('Failed to search books');
+      const data = await response.json();
+      return data.books;
     },
   },
 };

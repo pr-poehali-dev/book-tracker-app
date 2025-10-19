@@ -52,16 +52,16 @@ export default function Statistics() {
     : 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50">
-      <header className="border-b bg-white/80 backdrop-blur-sm animate-fade-in">
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm animate-fade-in">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-xl">
-                <Icon name="BarChart3" className="text-white" size={28} />
+              <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg border border-primary/30">
+                <Icon name="BarChart3" className="text-primary-foreground" size={28} />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-2xl font-heading font-bold text-primary">
                   Статистика чтения
                 </h1>
                 <p className="text-sm text-muted-foreground">Ваш прогресс</p>
@@ -78,50 +78,50 @@ export default function Statistics() {
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 animate-slide-up">
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+          <Card className="bg-card/50 border-primary/20 hover:border-primary/40 transition-all backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium opacity-90">Прочитано</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Прочитано</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold">{stats.overall.total_read}</div>
-              <p className="text-xs opacity-75 mt-1">книг завершено</p>
+              <div className="text-3xl font-heading font-bold text-primary">{stats.overall.total_read}</div>
+              <p className="text-xs text-muted-foreground mt-1">книг завершено</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-pink-500 to-pink-600 text-white border-0">
+          <Card className="bg-card/50 border-accent/20 hover:border-accent/40 transition-all backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium opacity-90">Страниц</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Страниц</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold">{stats.overall.total_pages.toLocaleString()}</div>
-              <p className="text-xs opacity-75 mt-1">прочитано</p>
+              <div className="text-3xl font-heading font-bold text-accent">{stats.overall.total_pages.toLocaleString()}</div>
+              <p className="text-xs text-muted-foreground mt-1">прочитано</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
+          <Card className="bg-card/50 border-secondary/20 hover:border-secondary/40 transition-all backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium opacity-90">В планах</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">В планах</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-heading font-bold">{stats.overall.total_wishlist}</div>
-              <p className="text-xs opacity-75 mt-1">хочу прочитать</p>
+              <div className="text-3xl font-heading font-bold text-secondary">{stats.overall.total_wishlist}</div>
+              <p className="text-xs text-muted-foreground mt-1">хочу прочитать</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0">
+          <Card className="bg-card/50 border-primary/20 hover:border-primary/40 transition-all backdrop-blur-sm">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium opacity-90">Рейтинг</CardTitle>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Рейтинг</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <div className="text-3xl font-heading font-bold">
+                <div className="text-3xl font-heading font-bold text-primary">
                   {typeof stats.overall.avg_rating === 'string' 
                     ? parseFloat(stats.overall.avg_rating).toFixed(1)
                     : stats.overall.avg_rating.toFixed(1)}
                 </div>
-                <Icon name="Star" size={20} className="fill-yellow-200" />
+                <Icon name="Star" size={20} className="fill-primary text-primary" />
               </div>
-              <p className="text-xs opacity-75 mt-1">средняя оценка</p>
+              <p className="text-xs text-muted-foreground mt-1">средняя оценка</p>
             </CardContent>
           </Card>
         </div>

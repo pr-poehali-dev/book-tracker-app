@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "name": "Search for Harry Potter",
+      "method": "GET",
+      "path": "/?q=Harry Potter",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Missing query parameter",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "OPTIONS request for CORS",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

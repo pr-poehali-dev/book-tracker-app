@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Open Sans', 'sans-serif'],
-				heading: ['Montserrat', 'sans-serif'],
+				sans: ['Cormorant Garamond', 'serif'],
+				heading: ['Cinzel', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

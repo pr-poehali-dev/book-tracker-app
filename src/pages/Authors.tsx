@@ -56,7 +56,7 @@ export default function Authors() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">Загрузка авторов...</p>
@@ -66,16 +66,16 @@ export default function Authors() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-purple-50 to-pink-50">
-      <header className="border-b bg-white/80 backdrop-blur-sm animate-fade-in">
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border/50 bg-card/80 backdrop-blur-sm animate-fade-in">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-xl">
-                <Icon name="Users" className="text-white" size={28} />
+              <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg border border-primary/30">
+                <Icon name="Users" className="text-primary-foreground" size={28} />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-2xl font-heading font-bold text-primary">
                   Авторы
                 </h1>
                 <p className="text-sm text-muted-foreground">Ваш личный каталог писателей</p>
@@ -92,23 +92,23 @@ export default function Authors() {
 
       <main className="container mx-auto px-4 py-8">
         {topAuthor && (
-          <Card className="mb-8 bg-gradient-to-br from-primary to-secondary text-white border-0 animate-slide-up">
+          <Card className="mb-8 bg-card/50 border-primary/30 backdrop-blur-sm animate-slide-up">
             <CardContent className="p-6">
               <div className="flex items-center gap-6">
                 <div className="relative">
                   <img
                     src={avatars[0]}
                     alt={topAuthor.name}
-                    className="w-24 h-24 rounded-full border-4 border-white/30 object-cover"
+                    className="w-24 h-24 rounded-full border-4 border-primary/30 object-cover"
                   />
-                  <div className="absolute -top-2 -right-2 bg-amber-400 p-2 rounded-full">
-                    <Icon name="Crown" size={20} className="text-amber-900" />
+                  <div className="absolute -top-2 -right-2 bg-primary p-2 rounded-full">
+                    <Icon name="Crown" size={20} className="text-primary-foreground" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm opacity-90 mb-1">Любимый автор</div>
-                  <div className="text-2xl font-heading font-bold mb-2">{topAuthor.name}</div>
-                  <div className="flex gap-6 text-sm">
+                  <div className="text-sm text-muted-foreground mb-1">Любимый автор</div>
+                  <div className="text-2xl font-heading font-bold text-primary mb-2">{topAuthor.name}</div>
+                  <div className="flex gap-6 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1.5">
                       <Icon name="BookOpen" size={16} />
                       {topAuthor.books_count} книг
@@ -129,7 +129,7 @@ export default function Authors() {
             <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
             <Input
               placeholder="Поиск по имени автора..."
-              className="pl-10 h-12 border-2 focus:border-primary transition-colors"
+              className="pl-10 h-12 bg-card/50 border-border focus:border-primary transition-colors"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -140,7 +140,7 @@ export default function Authors() {
           {filteredAuthors.map((author, index) => (
             <Card
               key={author.name}
-              className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-scale-in border-2 hover:border-primary"
+              className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-scale-in bg-card/50 border-border hover:border-primary backdrop-blur-sm"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <CardContent className="p-6">

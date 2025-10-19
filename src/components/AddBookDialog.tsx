@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import BookSearchDialog from '@/components/BookSearchDialog';
+import { type SearchedBook } from '@/lib/api';
 import {
   Dialog,
   DialogContent,
@@ -44,6 +46,7 @@ export default function AddBookDialog({ open, onOpenChange, onAddBook }: AddBook
   const [pages, setPages] = useState('');
   const [rating, setRating] = useState('');
   const [coverPreview, setCoverPreview] = useState('');
+  const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -54,6 +57,14 @@ export default function AddBookDialog({ open, onOpenChange, onAddBook }: AddBook
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleSelectSearchedBook = (book: SearchedBook) => {
+    setTitle(book.title);
+    setAuthor(book.author);
+    if (book.year) setYear(book.year.toString());
+    if (book.pages) setPages(book.pages.toString());
+    if (book.cover) setCoverPreview(book.cover);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -84,15 +95,34 @@ export default function AddBookDialog({ open, onOpenChange, onAddBook }: AddBook
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-card/95 backdrop-blur-sm border-border">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-heading bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Добавить книгу
-          </DialogTitle>
-          <DialogDescription>
-            Заполните информацию о книге и загрузите обложку
-          </DialogDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <DialogTitle className="text-2xl font-heading text-primary">
+                Добавить книгу
+              </DialogTitle>
+              <DialogDescription className="text-muted-foreground">
+                Заполните информацию о книге и загрузите обложку
+              </DialogDescription>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setSearchDialogOpen(true)}
+              className="gap-2 border-primary/30 hover:bg-primary/10"
+            >
+              <Icon name="Globe" size={18} />
+              Найти в интернете
+            </Button>
+          </div>
         </DialogHeader>
+
+        <BookSearchDialog
+          open={searchDialogOpen}
+          onOpenChange={setSearchDialogOpen}
+          onSelectBook={handleSelectSearchedBook}
+        />
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
